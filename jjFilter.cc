@@ -146,19 +146,13 @@ jjFilter::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
         if (numberOfJet < 2) return false;
 
 
-
         float Mjj = (jets_without_lep[0] + jets_without_lep[1]).M();
 
-//        std::cout << "jets size: "  << jets.size() << " \t jets_without_lep size: "  << jets_without_lep.size() << "difference: "  << jets.size() - jets_without_lep.size() << std::endl;
 
-        if (Mjj > 180) {
-            std::cout << "jets size: "  << jets.size() << " \t jets_without_lep size: "  << jets_without_lep.size() << " \t difference: "  << jets.size() - jets_without_lep.size() << std::endl;
-            std::cout << "Mjj: "  << Mjj << std::endl;
-            
-//            std::cout << "mu_and_tau_vector[0].pt: "  << mu_and_tau_vector[0].Pt() << " \t mu_and_tau_vector[0].eta: "  << mu_and_tau_vector[0].Eta ()  << std::endl;
-            return true;
-        }
-        else return false;
+
+        if (Mjj < 180) return false;
+
+        return true;
 
 }
 
