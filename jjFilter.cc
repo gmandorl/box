@@ -107,7 +107,7 @@ jjFilter::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
         Handle<std::vector<reco::GenParticle>> particelesCollection;
         iEvent.getByLabel("genParticles", particelesCollection);
         std::vector<reco::GenParticle>  particles = *particelesCollection.product();
-//         std::cout <<  "Partile size:  " << particles.size() << std::cout;
+
 
         Handle<std::vector<reco::GenJet>> jetsCollection;
         iEvent.getByLabel("ak4GenJets", jetsCollection);
