@@ -118,7 +118,7 @@ jjFilter::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 
         std::vector<TLorentzVector> hard_leptons;
         for(std::vector<reco::GenParticle>::const_iterator pit = particles.begin() ; pit != particles.end() ; ++pit) {
-            if (((abs(pit->pdgId()) == 11) || (abs(pit->pdgId()) == 13) || (abs(pit->pdgId()) == 15)) && pit->isHardProcess()) {
+            if (abs(pit->pdgId()) > 10 && abs(pit->pdgId()) < 17 && pit->isHardProcess()) {
                  TLorentzVector tmpVector;
                  tmpVector.SetPtEtaPhiM(pit->p4().pt(), pit->p4().Eta(), pit->p4().Phi(), pit->p4().M());
                  hard_leptons.push_back(tmpVector);
@@ -134,11 +134,11 @@ jjFilter::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
         for(std::vector<reco::GenJet>::const_iterator jit = jets.begin() ; jit != jets.end() ; ++jit) {
             TLorentzVector tmpVector;
             tmpVector.SetPtEtaPhiM(jit->pt(),jit->eta(),jit->phi(),jit->mass());
-            bool isIsolated = true;
+            bool is_without_leptons = true;
             for (int n=0; n < numberOfHardLeptons; ++n) {
-                if (hard_leptons[n].DeltaR(tmpVector) < 0.3) isIsolated = false;
+                if (hard_leptons[n].DeltaR(tmpVector) < 0.3) is_without_leptons = false;
             }
-            if (isIsolated) jets_without_lep.push_back(tmpVector);
+            if (is_without_leptons) jets_without_lep.push_back(tmpVector);
         }
         numberOfJet = jets_without_lep.size();
 
